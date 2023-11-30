@@ -1,17 +1,11 @@
 <?php
-require "./lib/routers.php";
 
-$router = new Router();
+require "router/router.php";
 
-// function users()
-// {
-//     echo "users page this is users";
-// }
+// Handling the request
+$method = $_SERVER['REQUEST_METHOD'];
+$url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
+// server startes here
+$router->start($method, $url);
 
-$router->Route('GET', '/api/users', "users");
-// $router->Route('POST', '/api/users', 'UserController@store');
-// Add more routes as needed
-
-
-$router->handleRequest($_SERVER['REQUEST_METHOD'], parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
