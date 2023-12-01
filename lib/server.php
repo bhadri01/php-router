@@ -6,6 +6,17 @@ class Router
 {
     private $routes = [];
 
+    private function renderPage($view)
+    {
+        include('views/' . $view . '.php');
+    }
+
+    private function renderErrorPage()
+    {
+        include('views/404.php');
+        exit();
+    }
+
     public function get($path, $handler)
     {
         $this->routes["GET"][$path] = $handler;
@@ -49,15 +60,12 @@ class Router
             $this->renderErrorPage(); // Handle 404 or other errors
         }
     }
+}
 
-    private function renderPage($view)
-    {
-        include('views/' . $view . '.php');
-    }
-
-    private function renderErrorPage()
-    {
-        include('views/404.php');
-        exit();
-    }
+function response($message, $statescode)
+{
+    http_response_code($statescode);
+    header("Content-Type: application/json");
+    echo json_encode($message);
+    exit();
 }
